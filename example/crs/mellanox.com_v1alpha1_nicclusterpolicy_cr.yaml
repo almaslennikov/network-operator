@@ -16,6 +16,16 @@ kind: NicClusterPolicy
 metadata:
   name: nic-cluster-policy
 spec:
+#  nodeSelector:
+#    kubernetes.io/hostname: cloud-dev-40
+  nodeAffinity:
+    preferredDuringSchedulingIgnoredDuringExecution:
+      - weight: 1
+        preference:
+          matchExpressions:
+            - key: "node-role.kubernetes.io/master"
+              operator: In
+              values: [ "" ]
   ofedDriver:
     image: mofed
     repository: mellanox

@@ -17,6 +17,7 @@ limitations under the License.
 package v1alpha1
 
 import (
+	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
@@ -106,6 +107,8 @@ type NicClusterPolicySpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
+	ClusterNodeAffinity    *v1.NodeAffinity      `json:"nodeAffinity,omitempty"`
+	ClusterNodeSelector    *v1.NodeSelector      `json:"nodeSelector,omitempty"`
 	OFEDDriver             *OFEDDriverSpec       `json:"ofedDriver,omitempty"`
 	NVPeerDriver           *NVPeerDriverSpec     `json:"nvPeerDriver,omitempty"`
 	RdmaSharedDevicePlugin *DevicePluginSpec     `json:"rdmaSharedDevicePlugin,omitempty"`

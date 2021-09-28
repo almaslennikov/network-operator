@@ -21,13 +21,21 @@ spec:
         name: multus
     spec:
       hostNetwork: true
+      {{- if .ClusterNodeSelector }}
+      nodeSelector:
+        {{ .ClusterNodeSelector }}
+      {{- end }}
       affinity:
         nodeAffinity:
+          {{- if .ClusterNodeAffinity }}
+          {{ .ClusterNodeAffinity }}
+          {{- else }}
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
               - matchExpressions:
                   - key: node-role.kubernetes.io/master
                     operator: DoesNotExist
+            {{- end}}
       serviceAccountName: multus
       {{- if .CrSpec.ImagePullSecrets }}
       imagePullSecrets:
