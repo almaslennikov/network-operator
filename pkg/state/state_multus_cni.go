@@ -25,14 +25,11 @@ import (
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 	"sigs.k8s.io/controller-runtime/pkg/source"
-	"sigs.k8s.io/yaml"
-	"strings"
 
 	mellanoxv1alpha1 "github.com/Mellanox/network-operator/api/v1alpha1"
 	"github.com/Mellanox/network-operator/pkg/consts"
 	"github.com/Mellanox/network-operator/pkg/render"
 	"github.com/Mellanox/network-operator/pkg/utils"
-	"text/template"
 )
 
 // NewStateMultusCNI creates a new state for Multus
@@ -113,15 +110,6 @@ func (s *stateMultusCNI) GetWatchSources() map[string]*source.Kind {
 	return wr
 }
 
-func indent(spaces int, v string) string {
-	pad := strings.Repeat(" ", spaces)
-	return pad + strings.Replace(v, "\n", "\n"+pad, -1)
-}
-
-func nindent(spaces int, v string) string {
-	return "\n" + indent(spaces, v)
-}
-
 func (s *stateMultusCNI) getManifestObjects(
 	cr *mellanoxv1alpha1.NicClusterPolicy) ([]*unstructured.Unstructured, error) {
 	renderData := &MultusManifestRenderData{
@@ -135,15 +123,7 @@ func (s *stateMultusCNI) getManifestObjects(
 
 	// render objects
 	log.V(consts.LogLevelDebug).Info("Rendering objects", "data:", renderData)
-	objs, err := s.renderer.RenderObjects(&render.TemplatingData{Data: renderData, Funcs: template.FuncMap{
-		// Need to move it to util and possibly reuse in other states
-		"yaml": func(obj interface{}) (string, error) {
-			bytes, err := yaml.Marshal(obj);
-			return string(bytes), err;
-		},
-		"indent": indent,
-		"nindent": nindent,
-	}})
+	objs, err := s.renderer.RenderObjects(&render.TemplatingData{Data: renderData})
 
 	if err != nil {
 		return nil, errors.Wrap(err, "failed to render objects")
