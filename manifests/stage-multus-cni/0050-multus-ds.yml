@@ -28,14 +28,14 @@ spec:
       affinity:
         nodeAffinity:
           {{- if .ClusterNodeAffinity }}
-          {{ .ClusterNodeAffinity }}
+          {{ .ClusterNodeAffinity | yaml | nindent 10 }}
           {{- else }}
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
               - matchExpressions:
                   - key: node-role.kubernetes.io/master
                     operator: DoesNotExist
-            {{- end}}
+          {{- end}}
       serviceAccountName: multus
       {{- if .CrSpec.ImagePullSecrets }}
       imagePullSecrets:
