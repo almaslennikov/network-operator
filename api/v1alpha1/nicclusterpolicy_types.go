@@ -102,18 +102,24 @@ type SecondaryNetworkSpec struct {
 	IpamPlugin *ImageSpec `json:"ipamPlugin,omitempty"`
 }
 
+type ClusterNodeSelectorSpec struct {
+	// NodeSelector is a selector which must be true for the pod to fit on a node.
+	// Selector which must match a node's labels for the pod to be scheduled on that node.
+	ClusterNodeSelector map[string]string `json:"nodeSelector,omitempty"`
+}
+
 // NicClusterPolicySpec defines the desired state of NicClusterPolicy
 type NicClusterPolicySpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
 	// Important: Run "make" to regenerate code after modifying this file
 
-	ClusterNodeAffinity    *v1.NodeAffinity      `json:"nodeAffinity,omitempty"`
-	ClusterNodeSelector    *v1.NodeSelector      `json:"nodeSelector,omitempty"`
-	OFEDDriver             *OFEDDriverSpec       `json:"ofedDriver,omitempty"`
-	NVPeerDriver           *NVPeerDriverSpec     `json:"nvPeerDriver,omitempty"`
-	RdmaSharedDevicePlugin *DevicePluginSpec     `json:"rdmaSharedDevicePlugin,omitempty"`
-	SriovDevicePlugin      *DevicePluginSpec     `json:"sriovDevicePlugin,omitempty"`
-	SecondaryNetwork       *SecondaryNetworkSpec `json:"secondaryNetwork,omitempty"`
+	ClusterNodeAffinity     *v1.NodeAffinity `json:"nodeAffinity,omitempty"`
+	ClusterNodeSelectorSpec `json:""`
+	OFEDDriver              *OFEDDriverSpec       `json:"ofedDriver,omitempty"`
+	NVPeerDriver            *NVPeerDriverSpec     `json:"nvPeerDriver,omitempty"`
+	RdmaSharedDevicePlugin  *DevicePluginSpec     `json:"rdmaSharedDevicePlugin,omitempty"`
+	SriovDevicePlugin       *DevicePluginSpec     `json:"sriovDevicePlugin,omitempty"`
+	SecondaryNetwork        *SecondaryNetworkSpec `json:"secondaryNetwork,omitempty"`
 }
 
 // AppliedState defines a finer-grained view of the observed state of NicClusterPolicy

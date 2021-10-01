@@ -21,21 +21,24 @@ spec:
         name: multus
     spec:
       hostNetwork: true
-      {{- if .ClusterNodeSelector }}
-      nodeSelector:
-        {{ .ClusterNodeSelector }}
-      {{- end }}
+      {{- if and (not .NicClusterPolicy.ClusterNodeAffinity) (not (len .NicClusterPolicy.ClusterNodeSelector)) }}
       affinity:
         nodeAffinity:
-          {{- if .ClusterNodeAffinity }}
-          {{ .ClusterNodeAffinity | yaml | nindent 10 }}
-          {{- else }}
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
               - matchExpressions:
-                  - key: node-role.kubernetes.io/master
+                  - key: "node-role.kubernetes.io/master"
                     operator: DoesNotExist
-          {{- end}}
+      {{- else if .NicClusterPolicy.ClusterNodeAffinity }}
+      affinity:
+        nodeAffinity:
+          {{- .NicClusterPolicy.ClusterNodeAffinity | yaml | nindent 10 }}
+      {{- else if (len .NicClusterPolicy.ClusterNodeSelector) }}
+      nodeSelector:
+      {{- range $key, $value := .NicClusterPolicy.ClusterNodeSelector }}
+        {{ $key }}: {{ $value }}
+        {{- end }}
+      {{- end }}
       serviceAccountName: multus
       {{- if .CrSpec.ImagePullSecrets }}
       imagePullSecrets:

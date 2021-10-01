@@ -19,7 +19,6 @@ package state //nolint:dupl
 import (
 	"github.com/pkg/errors"
 	appsv1 "k8s.io/api/apps/v1"
-	v1 "k8s.io/api/core/v1"
 	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
 	"k8s.io/apimachinery/pkg/runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -55,10 +54,9 @@ type stateMultusCNI struct {
 }
 
 type MultusManifestRenderData struct {
-	CrSpec              *mellanoxv1alpha1.MultusSpec
-	ClusterNodeAffinity *v1.NodeAffinity
-	ClusterNodeSelector *v1.NodeSelector
-	RuntimeSpec         *runtimeSpec
+	CrSpec           *mellanoxv1alpha1.MultusSpec
+	NicClusterPolicy mellanoxv1alpha1.NicClusterPolicySpec
+	RuntimeSpec      *runtimeSpec
 }
 
 // Sync attempt to get the system to match the desired state which State represent.
@@ -113,9 +111,8 @@ func (s *stateMultusCNI) GetWatchSources() map[string]*source.Kind {
 func (s *stateMultusCNI) getManifestObjects(
 	cr *mellanoxv1alpha1.NicClusterPolicy) ([]*unstructured.Unstructured, error) {
 	renderData := &MultusManifestRenderData{
-		CrSpec:              cr.Spec.SecondaryNetwork.Multus,
-		ClusterNodeAffinity: cr.Spec.ClusterNodeAffinity,
-		ClusterNodeSelector: cr.Spec.ClusterNodeSelector,
+		CrSpec:           cr.Spec.SecondaryNetwork.Multus,
+		NicClusterPolicy: cr.Spec,
 		RuntimeSpec: &runtimeSpec{
 			Namespace: consts.NetworkOperatorResourceNamespace,
 		},
