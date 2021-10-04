@@ -133,6 +133,7 @@ spec:
         - name: run-nvidia
           hostPath:
             path: {{ .CrSpec.GPUDriverSourcePath }}
+      {{- if and (not .NicClusterPolicy.ClusterNodeAffinity) (not (len .NicClusterPolicy.ClusterNodeSelector)) }}
       nodeSelector:
         feature.node.kubernetes.io/pci-15b3.present: "true"
         nvidia.com/gpu.present: "true"
@@ -153,3 +154,23 @@ spec:
                 operator: Lt
                 values:
                   - "{{ .RuntimeSpec.MaxCudaVersion }}"
+      {{- else }}
+      {{- if .NicClusterPolicy.ClusterNodeAffinity }}
+      affinity:
+        nodeAffinity:
+          {{- .NicClusterPolicy.ClusterNodeAffinity | yaml | nindent 10 }}
+      {{- end}}
+      {{- if (len .NicClusterPolicy.ClusterNodeSelector) }}
+      nodeSelector:
+      {{- range $key, $value := .NicClusterPolicy.ClusterNodeSelector }}
+        {{ $key }}: {{ $value }}
+        {{- end }}
+      {{- end }}
+      {{- end }}
+      serviceAccountName: multus
+      {{- if .CrSpec.ImagePullSecrets }}
+      imagePullSecrets:
+      {{- range .CrSpec.ImagePullSecrets }}
+        - name: {{ . }}
+      {{- end }}
+      {{- end }}

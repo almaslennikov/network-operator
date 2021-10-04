@@ -29,15 +29,18 @@ spec:
               - matchExpressions:
                   - key: "node-role.kubernetes.io/master"
                     operator: DoesNotExist
-      {{- else if .NicClusterPolicy.ClusterNodeAffinity }}
+      {{- else }}
+      {{- if .NicClusterPolicy.ClusterNodeAffinity }}
       affinity:
         nodeAffinity:
           {{- .NicClusterPolicy.ClusterNodeAffinity | yaml | nindent 10 }}
-      {{- else if (len .NicClusterPolicy.ClusterNodeSelector) }}
+      {{- end}}
+      {{- if (len .NicClusterPolicy.ClusterNodeSelector) }}
       nodeSelector:
       {{- range $key, $value := .NicClusterPolicy.ClusterNodeSelector }}
         {{ $key }}: {{ $value }}
         {{- end }}
+      {{- end }}
       {{- end }}
       serviceAccountName: multus
       {{- if .CrSpec.ImagePullSecrets }}

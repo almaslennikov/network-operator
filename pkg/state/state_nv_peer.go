@@ -62,8 +62,9 @@ type nvPeerRuntimeSpec struct {
 }
 
 type nvPeerManifestRenderData struct {
-	CrSpec      *mellanoxv1alpha1.NVPeerDriverSpec
-	RuntimeSpec *nvPeerRuntimeSpec
+	CrSpec           *mellanoxv1alpha1.NVPeerDriverSpec
+	NicClusterPolicy mellanoxv1alpha1.NicClusterPolicySpec
+	RuntimeSpec      *nvPeerRuntimeSpec
 }
 
 // Sync attempt to get the system to match the desired state which State represent.
@@ -153,7 +154,8 @@ func (s *stateNVPeer) getManifestObjects(
 	}
 
 	renderData := &nvPeerManifestRenderData{
-		CrSpec: cr.Spec.NVPeerDriver,
+		CrSpec:           cr.Spec.NVPeerDriver,
+		NicClusterPolicy: cr.Spec,
 		RuntimeSpec: &nvPeerRuntimeSpec{
 			runtimeSpec:    runtimeSpec{consts.NetworkOperatorResourceNamespace},
 			CPUArch:        attrs[0].Attributes[nodeinfo.AttrTypeCPUArch],

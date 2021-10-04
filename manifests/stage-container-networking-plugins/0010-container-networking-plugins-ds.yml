@@ -37,13 +37,27 @@ spec:
         - name: {{ . }}
       {{- end }}
       {{- end }}
+      {{- if and (not .NicClusterPolicy.ClusterNodeAffinity) (not (len .NicClusterPolicy.ClusterNodeSelector)) }}
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
               - matchExpressions:
-                  - key: node-role.kubernetes.io/master
+                  - key: "node-role.kubernetes.io/master"
                     operator: DoesNotExist
+      {{- else }}
+      {{- if .NicClusterPolicy.ClusterNodeAffinity }}
+      affinity:
+        nodeAffinity:
+          {{- .NicClusterPolicy.ClusterNodeAffinity | yaml | nindent 10 }}
+      {{- end}}
+      {{- if (len .NicClusterPolicy.ClusterNodeSelector) }}
+      nodeSelector:
+      {{- range $key, $value := .NicClusterPolicy.ClusterNodeSelector }}
+        {{ $key }}: {{ $value }}
+        {{- end }}
+      {{- end }}
+      {{- end }}
       containers:
         - name: cni-plugins
           image: {{ .CrSpec.Repository }}/{{ .CrSpec.Image }}:{{ .CrSpec.Version }}

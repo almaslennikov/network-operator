@@ -70,8 +70,9 @@ type ofedRuntimeSpec struct {
 }
 
 type ofedManifestRenderData struct {
-	CrSpec      *mellanoxv1alpha1.OFEDDriverSpec
-	RuntimeSpec *ofedRuntimeSpec
+	CrSpec           *mellanoxv1alpha1.OFEDDriverSpec
+	NicClusterPolicy mellanoxv1alpha1.NicClusterPolicySpec
+	RuntimeSpec      *ofedRuntimeSpec
 }
 
 // Sync attempt to get the system to match the desired state which State represent.
@@ -181,6 +182,7 @@ func (s *stateOFED) getManifestObjects(
 			HTTPSProxy:  os.Getenv(consts.HTTPSProxy),
 			NoProxy:     os.Getenv(consts.NoProxy),
 		},
+		NicClusterPolicy: cr.Spec,
 	}
 	// render objects
 	log.V(consts.LogLevelDebug).Info("Rendering objects", "data:", renderData)

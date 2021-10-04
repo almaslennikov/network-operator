@@ -57,8 +57,9 @@ type stateCNIPlugins struct {
 }
 
 type CNIPluginsManifestRenderData struct {
-	CrSpec      *mellanoxv1alpha1.ImageSpec
-	RuntimeSpec *runtimeSpec
+	CrSpec           *mellanoxv1alpha1.ImageSpec
+	NicClusterPolicy mellanoxv1alpha1.NicClusterPolicySpec
+	RuntimeSpec      *runtimeSpec
 }
 
 // Sync attempt to get the system to match the desired state which State represent.
@@ -114,7 +115,8 @@ func (s *stateCNIPlugins) GetWatchSources() map[string]*source.Kind {
 func (s *stateCNIPlugins) getManifestObjects(
 	cr *mellanoxv1alpha1.NicClusterPolicy) ([]*unstructured.Unstructured, error) {
 	renderData := &CNIPluginsManifestRenderData{
-		CrSpec: cr.Spec.SecondaryNetwork.CniPlugins,
+		CrSpec:           cr.Spec.SecondaryNetwork.CniPlugins,
+		NicClusterPolicy: cr.Spec,
 		RuntimeSpec: &runtimeSpec{
 			Namespace: consts.NetworkOperatorResourceNamespace,
 		},

@@ -60,6 +60,7 @@ type sharedDpRuntimeSpec struct {
 }
 type sharedDpManifestRenderData struct {
 	CrSpec              *mellanoxv1alpha1.DevicePluginSpec
+	NicClusterPolicy    mellanoxv1alpha1.NicClusterPolicySpec
 	DeployInitContainer bool
 	RuntimeSpec         *sharedDpRuntimeSpec
 }
@@ -137,6 +138,7 @@ func (s *stateSharedDp) getManifestObjects(
 
 	renderData := &sharedDpManifestRenderData{
 		CrSpec:              cr.Spec.RdmaSharedDevicePlugin,
+		NicClusterPolicy:    cr.Spec,
 		DeployInitContainer: cr.Spec.OFEDDriver != nil,
 		RuntimeSpec: &sharedDpRuntimeSpec{
 			runtimeSpec: runtimeSpec{consts.NetworkOperatorResourceNamespace},

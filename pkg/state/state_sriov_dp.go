@@ -55,6 +55,7 @@ type stateSriovDp struct {
 
 type sriovDpManifestRenderData struct {
 	CrSpec              *mellanoxv1alpha1.DevicePluginSpec
+	NicClusterPolicy    mellanoxv1alpha1.NicClusterPolicySpec
 	DeployInitContainer bool
 	RuntimeSpec         *runtimeSpec
 }
@@ -110,6 +111,7 @@ func (s *stateSriovDp) getManifestObjects(
 	cr *mellanoxv1alpha1.NicClusterPolicy) ([]*unstructured.Unstructured, error) {
 	renderData := &sriovDpManifestRenderData{
 		CrSpec:              cr.Spec.SriovDevicePlugin,
+		NicClusterPolicy:    cr.Spec,
 		DeployInitContainer: cr.Spec.OFEDDriver != nil,
 		RuntimeSpec: &runtimeSpec{
 			Namespace: consts.NetworkOperatorResourceNamespace,

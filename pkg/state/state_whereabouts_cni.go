@@ -54,8 +54,9 @@ type stateWhereaboutsCNI struct {
 }
 
 type WhereaboutsManifestRenderData struct {
-	CrSpec      *mellanoxv1alpha1.ImageSpec
-	RuntimeSpec *runtimeSpec
+	CrSpec           *mellanoxv1alpha1.ImageSpec
+	NicClusterPolicy mellanoxv1alpha1.NicClusterPolicySpec
+	RuntimeSpec      *runtimeSpec
 }
 
 // Sync attempt to get the system to match the desired state which State represent.
@@ -110,7 +111,8 @@ func (s *stateWhereaboutsCNI) GetWatchSources() map[string]*source.Kind {
 func (s *stateWhereaboutsCNI) getManifestObjects(
 	cr *mellanoxv1alpha1.NicClusterPolicy) ([]*unstructured.Unstructured, error) {
 	renderData := &WhereaboutsManifestRenderData{
-		CrSpec: cr.Spec.SecondaryNetwork.IpamPlugin,
+		CrSpec:           cr.Spec.SecondaryNetwork.IpamPlugin,
+		NicClusterPolicy: cr.Spec,
 		RuntimeSpec: &runtimeSpec{
 			Namespace: consts.NetworkOperatorResourceNamespace,
 		},

@@ -36,6 +36,7 @@ spec:
       serviceAccountName: whereabouts
       nodeSelector:
         beta.kubernetes.io/arch: amd64
+      {{- if and (not .NicClusterPolicy.ClusterNodeAffinity) (not (len .NicClusterPolicy.ClusterNodeSelector)) }}
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -43,6 +44,15 @@ spec:
               - matchExpressions:
                   - key: node-role.kubernetes.io/master
                     operator: DoesNotExist
+      {{- else if .NicClusterPolicy.ClusterNodeAffinity }}
+      affinity:
+        nodeAffinity:
+          {{- .NicClusterPolicy.ClusterNodeAffinity | yaml | nindent 10 }}
+      {{- else if (len .NicClusterPolicy.ClusterNodeSelector) }}
+      {{- range $key, $value := .NicClusterPolicy.ClusterNodeSelector }}
+      {{ $key }}: {{ $value }}
+      {{- end }}
+      {{- end }}
       {{- if .CrSpec.ImagePullSecrets }}
       imagePullSecrets:
       {{- range .CrSpec.ImagePullSecrets }}

@@ -121,3 +121,13 @@ spec:
         feature.node.kubernetes.io/pci-15b3.present: "true"
         feature.node.kubernetes.io/system-os_release.ID: {{ .RuntimeSpec.OSName }}
         feature.node.kubernetes.io/system-os_release.VERSION_ID: "{{ .RuntimeSpec.OSVer }}"
+        {{- if (len .NicClusterPolicy.ClusterNodeSelector) }}
+        {{- range $key, $value := .NicClusterPolicy.ClusterNodeSelector }}
+        {{ $key }}: {{ $value }}
+        {{- end }}
+        {{- end }}
+      {{- if .NicClusterPolicy.ClusterNodeAffinity }}
+      affinity:
+        nodeAffinity:
+          {{- .NicClusterPolicy.ClusterNodeAffinity | yaml | nindent 10 }}
+      {{- end }}

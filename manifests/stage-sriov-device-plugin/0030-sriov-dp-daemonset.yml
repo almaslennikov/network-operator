@@ -34,6 +34,16 @@ spec:
       nodeSelector:
         feature.node.kubernetes.io/pci-15b3.present: "true"
         network.nvidia.com/operator.mofed.wait: "false"
+        {{- if (len .NicClusterPolicy.ClusterNodeSelector) }}
+        {{- range $key, $value := .NicClusterPolicy.ClusterNodeSelector }}
+        {{ $key }}: {{ $value }}
+        {{- end }}
+        {{- end }}
+      {{- if .NicClusterPolicy.ClusterNodeAffinity }}
+      affinity:
+        nodeAffinity:
+          {{- .NicClusterPolicy.ClusterNodeAffinity | yaml | nindent 10 }}
+      {{- end }}
       tolerations:
         # Allow this pod to be rescheduled while the node is in "critical add-ons only" mode.
         # This, along with the annotation above marks this pod as a critical add-on.
