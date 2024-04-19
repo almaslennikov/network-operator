@@ -1,0 +1,44 @@
+name: Test Coverage
+
+on:
+  pull_request:
+    branches: [master]
+
+jobs:
+  coverage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '^1.21'
+
+      - name: Run tests and collect coverage
+        run: |
+          make test-coverage
+
+      - name: Generate coverage report
+        run: |
+          go tool cover -func=network-operator.cover
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # Required only for private repos
+          file: ./network-operator.cover
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: true
+          verbose: true
+
+#      - name: Post coverage comment to PR
+#        uses: machine-learning-apps/pr-comment@v1.0.0
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          path: coverage.txt
+#          regex: '^total:\\s*\\(statements\\)\\s*([0-9\\.]+)%'
+#          message: "Code coverage on this PR is **${{ match }}%**. Please ensure this meets the project standards."
