@@ -63,8 +63,8 @@ spec:
       version: v1.5.0
     multus:
       image: multus-cni
-      repository: ghcr.io/k8snetworkplumbingwg
-      version: v4.1.0
+      repository: ghcr.io/almaslennikov
+      version: 18e12ac
     ipamPlugin:
       image: whereabouts
       repository: ghcr.io/k8snetworkplumbingwg
