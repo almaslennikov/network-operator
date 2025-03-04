@@ -63,8 +63,8 @@ spec:
       version: v1.5.0
     multus:
       image: multus-cni
-      repository: ghcr.io/k8snetworkplumbingwg
-      version: v4.1.0
+      repository: ghcr.io/almaslennikov
+      version: 8b68013
   nvIpam:
     image: nvidia-k8s-ipam
     repository: ghcr.io/mellanox
