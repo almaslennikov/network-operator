@@ -1,7 +1,7 @@
 NetworkOperator:
   image: network-operator
   repository: nvcr.io/nvstaging/mellanox
-  version: v25.1.0-beta.3
+  version: v25.4.0-beta.1
 NetworkOperatorInitContainer:
   image: network-operator-init-container
   repository: ghcr.io/mellanox
@@ -29,7 +29,7 @@ SriovIbCni:
 Mofed:
   image: doca-driver
   repository: nvcr.io/nvstaging/mellanox
-  version: 25.04-0.0.6.0-0
+  version: 25.04-0.2.3.0-0
 RdmaSharedDevicePlugin:
   image: k8s-rdma-shared-dev-plugin
   repository: ghcr.io/mellanox
@@ -45,7 +45,7 @@ IbKubernetes:
 CniPlugins:
   image: plugins
   repository: ghcr.io/k8snetworkplumbingwg
-  version: v1.5.0
+  version: v1.6.2
 Multus:
   image: multus-cni
   repository: ghcr.io/almaslennikov
@@ -61,7 +61,7 @@ IpamPlugin:
 nvIpam:
   image: nvidia-k8s-ipam
   repository: ghcr.io/mellanox
-  version: v0.3.5
+  version: v0.3.6
 nicFeatureDiscovery:
   image: nic-feature-discovery
   repository: ghcr.io/mellanox
@@ -81,11 +81,11 @@ rdmaCni:
 nicConfigurationOperator:
   image: nic-configuration-operator
   repository: ghcr.io/mellanox
-  version: v0.1.17
+  version: v0.1.18
 nicConfigurationConfigDaemon:
   image: nic-configuration-operator-daemon
   repository: ghcr.io/mellanox
-  version: v0.1.17
+  version: v0.1.18
 maintenanceOperator:
   image: maintenance-operator
   repository: ghcr.io/mellanox
