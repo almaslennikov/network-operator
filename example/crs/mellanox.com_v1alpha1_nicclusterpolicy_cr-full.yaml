@@ -24,7 +24,7 @@ spec:
   ofedDriver:
     image: doca-driver
     repository: nvcr.io/nvstaging/mellanox
-    version: 25.04-0.2.3.0-0
+    version: 25.04-0.6.1.0-2
     upgradePolicy:
       autoUpgrade: true
       drain:
@@ -45,7 +45,7 @@ spec:
   rdmaSharedDevicePlugin:
     image: k8s-rdma-shared-dev-plugin
     repository: ghcr.io/mellanox
-    version: v1.5.2
+    version: v1.5.3
     # The config below directly propagates to k8s-rdma-shared-device-plugin configuration.
     # Replace 'devices' with your (RDMA capable) netdevice name.
     config: |
@@ -82,11 +82,11 @@ spec:
     cniPlugins:
       image: plugins
       repository: ghcr.io/k8snetworkplumbingwg
-      version: v1.6.2
+      version: v1.6.2-update.1
     ipoib:
       image: ipoib-cni
       repository: ghcr.io/mellanox
-      version: v1.2.1
+      version: v1.2.2
     multus:
       image: multus-cni
       repository: ghcr.io/almaslennikov
@@ -94,23 +94,23 @@ spec:
     ipamPlugin:
       image: whereabouts
       repository: ghcr.io/k8snetworkplumbingwg
-      version: v0.7.0
+      version: v0.9.0
   nvIpam:
     image: nvidia-k8s-ipam
     repository: ghcr.io/mellanox
-    version: v0.3.6
+    version: v0.3.7
     enableWebhook: false
   ibKubernetes:
     image: ib-kubernetes
     repository: ghcr.io/mellanox
-    version: v1.1.0
+    version: v1.1.1
     pKeyGUIDPoolRangeStart: "02:00:00:00:00:00:00:00"
     pKeyGUIDPoolRangeEnd: "02:FF:FF:FF:FF:FF:FF:FF"
     ufmSecret: ufm-secret
   nicFeatureDiscovery:
     image: nic-feature-discovery
     repository: ghcr.io/mellanox
-    version: v0.0.1
+    version: v0.0.2
   docaTelemetryService:
     image: doca_telemetry
     repository: nvcr.io/nvidia/doca
@@ -119,11 +119,11 @@ spec:
     operator:
       image: nic-configuration-operator
       repository: ghcr.io/mellanox
-      version: v0.1.18
+      version: v1.0.3
     configurationDaemon:
       image: nic-configuration-operator-daemon
       repository: ghcr.io/mellanox
-      version: v0.1.18
+      version: v1.0.3
     nicFirmwareStorage:
       create: true
       pvcName: nic-fw-storage-pvc

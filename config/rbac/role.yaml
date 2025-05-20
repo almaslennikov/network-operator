@@ -30,6 +30,12 @@ rules:
 - apiGroups:
   - ""
   resources:
+  - configmaps/finalizers
+  verbs:
+  - update
+- apiGroups:
+  - ""
+  resources:
   - nodes
   verbs:
   - get
@@ -206,6 +212,12 @@ rules:
   - update
   - watch
 - apiGroups:
+  - maintenance.nvidia.com
+  resources:
+  - nodemaintenances/status
+  verbs:
+  - get
+- apiGroups:
   - mellanox.com
   resources:
   - hostdevicenetworks
@@ -292,9 +304,23 @@ rules:
   verbs:
   - use
 - apiGroups:
+  - sriovnetwork.openshift.io
+  resources:
+  - ovsnetworks
+  - sriovnetworknodepolicies
+  - sriovnetworkpoolconfigs
+  verbs:
+  - create
+  - delete
+  - deletecollection
+  - get
+  - list
+  - patch
+- apiGroups:
   - whereabouts.cni.cncf.io
   resources:
   - ippools
+  - nodeslicepools
   - overlappingrangeipreservations
   verbs:
   - create

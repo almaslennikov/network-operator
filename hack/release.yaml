@@ -1,7 +1,7 @@
 NetworkOperator:
   image: network-operator
   repository: nvcr.io/nvstaging/mellanox
-  version: v25.4.0-beta.1
+  version: v25.4.0-beta.4
 NetworkOperatorInitContainer:
   image: network-operator-init-container
   repository: ghcr.io/mellanox
@@ -9,15 +9,15 @@ NetworkOperatorInitContainer:
 SriovNetworkOperator:
   image: sriov-network-operator
   repository: nvcr.io/nvstaging/mellanox
-  version: network-operator-25.1.0-beta.3
+  version: 4225daf
 SriovNetworkOperatorWebhook:
   image: sriov-network-operator-webhook
   repository: nvcr.io/nvstaging/mellanox
-  version: network-operator-25.1.0-beta.3
+  version: 4225daf
 SriovConfigDaemon:
   image: sriov-network-operator-config-daemon
   repository: nvcr.io/nvstaging/mellanox
-  version: network-operator-25.1.0-beta.3
+  version: 4225daf
 SriovCni:
   image: sriov-cni
   repository: ghcr.io/k8snetworkplumbingwg
@@ -25,15 +25,15 @@ SriovCni:
 SriovIbCni:
   image: ib-sriov-cni
   repository: ghcr.io/k8snetworkplumbingwg
-  version: v1.1.1
+  version: v1.2.1
 Mofed:
   image: doca-driver
   repository: nvcr.io/nvstaging/mellanox
-  version: 25.04-0.2.3.0-0
+  version: 25.04-0.6.1.0-2
 RdmaSharedDevicePlugin:
   image: k8s-rdma-shared-dev-plugin
   repository: ghcr.io/mellanox
-  version: v1.5.2
+  version: v1.5.3
 SriovDevicePlugin:
   image: sriov-network-device-plugin
   repository: ghcr.io/k8snetworkplumbingwg
@@ -41,11 +41,11 @@ SriovDevicePlugin:
 IbKubernetes:
   image: ib-kubernetes
   repository: ghcr.io/mellanox
-  version: v1.1.0
+  version: v1.1.1
 CniPlugins:
   image: plugins
   repository: ghcr.io/k8snetworkplumbingwg
-  version: v1.6.2
+  version: v1.6.2-update.1
 Multus:
   image: multus-cni
   repository: ghcr.io/almaslennikov
@@ -53,19 +53,19 @@ Multus:
 Ipoib:
   image: ipoib-cni
   repository: ghcr.io/mellanox
-  version: v1.2.1
+  version: v1.2.2
 IpamPlugin:
   image: whereabouts
   repository: ghcr.io/k8snetworkplumbingwg
-  version: v0.7.0
+  version: v0.9.0
 nvIpam:
   image: nvidia-k8s-ipam
   repository: ghcr.io/mellanox
-  version: v0.3.6
+  version: v0.3.7
 nicFeatureDiscovery:
   image: nic-feature-discovery
   repository: ghcr.io/mellanox
-  version: v0.0.1
+  version: v0.0.2
 docaTelemetryService:
   image: doca_telemetry
   repository: nvcr.io/nvidia/doca
@@ -73,20 +73,24 @@ docaTelemetryService:
 ovsCni:
   image: ovs-cni-plugin
   repository: ghcr.io/k8snetworkplumbingwg
-  version: v0.37.0
+  version: v0.38.2
 rdmaCni:
   image: rdma-cni
   repository: ghcr.io/k8snetworkplumbingwg
-  version: v1.2.0
+  version: v1.3.0
 nicConfigurationOperator:
   image: nic-configuration-operator
   repository: ghcr.io/mellanox
-  version: v0.1.18
+  version: v1.0.3
 nicConfigurationConfigDaemon:
   image: nic-configuration-operator-daemon
   repository: ghcr.io/mellanox
-  version: v0.1.18
+  version: v1.0.3
 maintenanceOperator:
   image: maintenance-operator
   repository: ghcr.io/mellanox
-  version: v0.2.0
+  version: v0.2.2
+spectrumXOperator:
+  image: spectrum-x-operator
+  repository: ghcr.io/mellanox
+  version: v0.0.3

@@ -291,6 +291,7 @@ type DOCATelemetryServiceSpec struct {
 // NicFirmwareStorageSpec contains configuration for the NIC firmware storage
 type NicFirmwareStorageSpec struct {
 	// Create specifies whether to create a new PVC or use an existing one
+	// If create == false, the existing PVC should be located in the same namespace as the operator
 	// +kubebuilder:default:=true
 	Create bool `json:"create,omitempty"`
 	// PVCName is the name of the PVC to mount as NIC Firmware storage. Default value: "nic-fw-storage-pvc"
@@ -304,10 +305,12 @@ type NicFirmwareStorageSpec struct {
 	// +kubebuilder:validation:MinLength=1
 	// +kubebuilder:validation:MaxLength=63
 	// +kubebuilder:validation:Pattern=`^[a-z0-9]([-a-z0-9]*[a-z0-9])?$`
+	// +kubebuilder:validation:XValidation:rule="self == oldSelf",message="storageClassName is immutable once set. nicFirmwareStorage should be deleted and created again with a new value."
 	StorageClassName string `json:"storageClassName,omitempty"`
-	// storage size for the NIC Configuration Operator to request. Default value: 1Gi
+	// AvailableStorageSize is storage size for the NIC Configuration Operator to request. Only applies if nicFirmwareStorage.create == true. Default value: 1Gi
 	// +kubebuilder:validation:Pattern=`^(\d+)(Ei|Pi|Ti|Gi|Mi|Ki)$`
 	// +kubebuilder:default:="1Gi"
+	// +kubebuilder:validation:XValidation:rule="self == oldSelf",message="availableStorageSize is immutable once set. nicFirmwareStorage should be deleted and created again with a new value."
 	AvailableStorageSize string `json:"availableStorageSize,omitempty"`
 }
 
@@ -323,6 +326,16 @@ type NicConfigurationOperatorSpec struct {
 	// +kubebuilder:validation:Enum={"info", "debug"}
 	// +kubebuilder:default:="info"
 	LogLevel string `json:"logLevel,omitempty"`
+}
+
+// SpectrumXOperatorSpec describes configuration options for NVIDIA Spectrum-X Operator
+type SpectrumXOperatorSpec struct {
+	// Image information for NVIDIA Spectrum-X Operator
+	ImageSpec `json:""`
+	// Spectrum-X Operator ConfigMap name
+	SpectrumXConfig *ConfigMapNameReference `json:"spectrumXConfig,omitempty"`
+	// SR-IOV Network Operator and related CRDs namespace
+	SriovObjNamespace string `json:"sriovObjNamespace,omitempty"`
 }
 
 // NicClusterPolicySpec defines the desired state of NicClusterPolicy
@@ -366,6 +379,9 @@ type NicClusterPolicySpec struct {
 	// NicConfigurationOperator provides Kubernetes CRD API to allow FW configuration on NVIDIA NICs in a coordinated manner
 	// See: https://github.com/Mellanox/nic-configuration-operator
 	NicConfigurationOperator *NicConfigurationOperatorSpec `json:"nicConfigurationOperator,omitempty"`
+	// SpectrumXOperator exposes NVIDIA Spectrum-X Operator.
+	// See: https://github.com/Mellanox/spectrum-x-operator/
+	SpectrumXOperator *SpectrumXOperatorSpec `json:"spectrumXOperator,omitempty"`
 	// NodeAffinity rules to inject to the DaemonSets objects that are managed by the operator
 	NodeAffinity *v1.NodeAffinity `json:"nodeAffinity,omitempty"`
 	// Tolerations to inject to the DaemonSets objects that are managed by the operator

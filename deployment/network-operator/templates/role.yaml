@@ -20,315 +20,446 @@ metadata:
   name: {{ include "network-operator.fullname" . }}
 rules:
 - apiGroups:
-  - ""
+    - ""
   resources:
-  - configmaps
-  - events
-  - persistentvolumeclaims
-  - secrets
+    - configmaps
+    - configmaps/finalizers
+    - events
+    - persistentvolumeclaims
+    - secrets
   verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
 - apiGroups:
-  - ""
+    - ""
   resources:
-  - endpoints
-  - namespaces
-  - pods
-  - pods/status
-  - serviceaccounts
-  - services
-  - services/finalizers
+    - endpoints
+    - namespaces
+    - pods
+    - pods/finalizers
+    - pods/status
+    - serviceaccounts
+    - services
+    - services/finalizers
   verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
 - apiGroups:
-  - ""
+    - ""
   resources:
-  - nodes
+    - nodes
   verbs:
-  - get
-  - list
-  - patch
-  - update
-  - watch
+    - get
+    - list
+    - patch
+    - update
+    - watch
 - apiGroups:
-  - ""
+    - ""
   resources:
-  - pods
+    - pods
   verbs:
-  - list
+    - list
 - apiGroups:
-  - ""
+    - ""
   resources:
-  - pods/eviction
+    - pods/eviction
   verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
 - apiGroups:
-  - admissionregistration.k8s.io
+    - admissionregistration.k8s.io
   resources:
-  - validatingwebhookconfigurations
+    - validatingwebhookconfigurations
   verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
 - apiGroups:
-  - apiextensions.k8s.io
+    - apiextensions.k8s.io
   resources:
-  - customresourcedefinitions
+    - customresourcedefinitions
   verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
 - apiGroups:
-  - apps
+    - apps
   resources:
-  - controllerrevisions
-  - daemonsets
-  - deployments
-  - replicasets
-  - statefulsets
+    - controllerrevisions
+    - daemonsets
+    - deployments
+    - replicasets
+    - statefulsets
   verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
 - apiGroups:
-  - apps
+    - apps
   resources:
-  - daemonsets
-  - deployments
-  - replicasets
-  - statefulsets
+    - daemonsets
+    - deployments
+    - replicasets
+    - statefulsets
   verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
 - apiGroups:
-  - apps
+    - apps
   resources:
-  - deployments/finalizers
+    - deployments/finalizers
   verbs:
-  - update
+    - update
 - apiGroups:
-  - batch
+    - batch
   resources:
-  - cronjobs
+    - cronjobs
   verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
 - apiGroups:
-  - cert-manager.io
+    - cert-manager.io
   resources:
-  - certificates
-  - issuers
+    - certificates
+    - issuers
   verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
 - apiGroups:
-  - config.openshift.io
+    - config.openshift.io
   resources:
-  - clusterversions
-  - proxies
+    - clusterversions
+    - proxies
   verbs:
-  - get
-  - list
-  - watch
+    - get
+    - list
+    - watch
 - apiGroups:
-  - configuration.net.nvidia.com
+    - configuration.net.nvidia.com
   resources:
-  - nicconfigurationtemplates
-  - nicdevices
-  - nicfirmwaresources
-  - nicfirmwaretemplates
+    - nicconfigurationtemplates
+    - nicdevices
+    - nicfirmwaresources
+    - nicfirmwaretemplates
   verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
 - apiGroups:
-  - configuration.net.nvidia.com
+    - configuration.net.nvidia.com
   resources:
-  - nicconfigurationtemplates/finalizers
-  - nicdevices/finalizers
-  - nicfirmwaresources/finalizers
-  - nicfirmwaretemplates/finalizers
+    - nicconfigurationtemplates/finalizers
+    - nicdevices/finalizers
+    - nicfirmwaresources/finalizers
+    - nicfirmwaretemplates/finalizers
   verbs:
-  - update
+    - update
 - apiGroups:
-  - configuration.net.nvidia.com
+    - configuration.net.nvidia.com
   resources:
-  - nicconfigurationtemplates/status
-  - nicdevices/status
-  - nicfirmwaresources/status
-  - nicfirmwaretemplates/status
+    - nicconfigurationtemplates/status
+    - nicdevices/status
+    - nicfirmwaresources/status
+    - nicfirmwaretemplates/status
   verbs:
-  - get
-  - patch
-  - update
+    - get
+    - patch
+    - update
 - apiGroups:
-  - coordination.k8s.io
+    - coordination.k8s.io
   resources:
-  - leases
+    - leases
   verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
 - apiGroups:
-  - events.k8s.io
+    - events.k8s.io
   resources:
-  - events
+    - events
   verbs:
-  - create
-  - get
-  - patch
-  - update
+    - create
+    - get
+    - patch
+    - update
 - apiGroups:
-  - image.openshift.io
+    - image.openshift.io
   resources:
-  - imagestreams
+    - imagestreams
   verbs:
-  - get
-  - list
-  - watch
+    - get
+    - list
+    - watch
 - apiGroups:
-  - k8s.cni.cncf.io
+    - k8s.cni.cncf.io
   resources:
-  - network-attachment-definitions
+    - network-attachment-definitions
   verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
+- apiGroups:
+    - mellanox.com
+  resources:
+    - hostdevicenetworks
+  verbs:
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
+- apiGroups:
+    - mellanox.com
+  resources:
+    - hostdevicenetworks/finalizers
+  verbs:
+    - update
+- apiGroups:
+    - mellanox.com
+  resources:
+    - hostdevicenetworks/status
+  verbs:
+    - get
+    - patch
+    - update
+- apiGroups:
+    - mellanox.com
+  resources:
+    - ipoibnetworks
+  verbs:
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
+- apiGroups:
+    - mellanox.com
+  resources:
+    - ipoibnetworks/finalizers
+  verbs:
+    - update
+- apiGroups:
+    - mellanox.com
+  resources:
+    - ipoibnetworks/status
+  verbs:
+    - get
+    - patch
+    - update
+- apiGroups:
+    - mellanox.com
+  resources:
+    - macvlannetworks
+  verbs:
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
+- apiGroups:
+    - mellanox.com
+  resources:
+    - macvlannetworks/finalizers
+  verbs:
+    - update
+- apiGroups:
+    - mellanox.com
+  resources:
+    - macvlannetworks/status
+  verbs:
+    - get
+    - patch
+    - update
 - apiGroups:
   - mellanox.com
   resources:
-  - hostdevicenetworks
+    - nicclusterpolicies
+    - nicclusterpolicies/status
   verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
 - apiGroups:
-  - mellanox.com
+    - mellanox.com
   resources:
-  - hostdevicenetworks/finalizers
+    - nicclusterpolicies/finalizers
   verbs:
-  - update
+    - update
 - apiGroups:
-  - mellanox.com
+    - monitoring.coreos.com
   resources:
-  - hostdevicenetworks/status
+    - servicemonitors
   verbs:
-  - get
-  - patch
-  - update
+    - create
+    - get
+    - list
+    - watch
 - apiGroups:
-  - mellanox.com
+    - nv-ipam.nvidia.com
   resources:
-  - ipoibnetworks
+    - ippools
+    - cidrpools
   verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
+    - create
+    - get
+    - list
+    - watch
 - apiGroups:
-  - mellanox.com
+    - nv-ipam.nvidia.com
   resources:
-  - ipoibnetworks/finalizers
+    - ippools/status
+    - cidrpools/status
   verbs:
-  - update
+    - get
+    - patch
+    - update
 - apiGroups:
-  - mellanox.com
+    - rbac.authorization.k8s.io
   resources:
-  - ipoibnetworks/status
+    - clusterrolebindings
+    - clusterroles
+    - rolebindings
+    - roles
   verbs:
-  - get
-  - patch
-  - update
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
 - apiGroups:
-  - mellanox.com
+    - security.openshift.io
+  resourceNames:
+    - privileged
   resources:
-  - macvlannetworks
+    - securitycontextconstraints
   verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
+    - use
 - apiGroups:
-  - mellanox.com
+    - whereabouts.cni.cncf.io
   resources:
-  - macvlannetworks/finalizers
+    - ippools
   verbs:
-  - update
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
 - apiGroups:
-  - mellanox.com
+    - whereabouts.cni.cncf.io
   resources:
-  - macvlannetworks/status
+    - overlappingrangeipreservations
   verbs:
-  - get
-  - patch
-  - update
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
+- apiGroups:
+    - whereabouts.cni.cncf.io
+  resources:
+    - nodeslicepools
+  verbs:
+    - create
+    - delete
+    - get
+    - list
+    - patch
+    - update
+    - watch
+- apiGroups:
+    - nv-ipam.nvidia.com
+  resources:
+    - cidrpools
+  verbs:
+    - delete
+    - deletecollection
+    - get
+    - list
+    - patch
+- apiGroups:
+    - sriovnetwork.openshift.io
+  resources:
+    - ovsnetworks
+    - sriovnetworknodepolicies
+    - sriovnetworkpoolconfigs
+  verbs:
+    - create
+    - delete
+    - deletecollection
+    - get
+    - list
+    - patch
 - apiGroups:
   - maintenance.nvidia.com
   resources:
@@ -342,96 +473,8 @@ rules:
   - update
   - watch
 - apiGroups:
-  - mellanox.com
+  - maintenance.nvidia.com
   resources:
-  - nicclusterpolicies
-  - nicclusterpolicies/status
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - mellanox.com
-  resources:
-  - nicclusterpolicies/finalizers
-  verbs:
-  - update
-- apiGroups:
-  - monitoring.coreos.com
-  resources:
-  - servicemonitors
-  verbs:
-  - create
-  - get
-  - list
-  - watch
-- apiGroups:
-  - nv-ipam.nvidia.com
-  resources:
-  - ippools
-  - cidrpools
-  verbs:
-  - create
-  - get
-  - list
-  - watch
-- apiGroups:
-  - nv-ipam.nvidia.com
-  resources:
-  - ippools/status
-  - cidrpools/status
+  - nodemaintenances/status
   verbs:
   - get
-  - patch
-  - update
-- apiGroups:
-  - rbac.authorization.k8s.io
-  resources:
-  - clusterrolebindings
-  - clusterroles
-  - rolebindings
-  - roles
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - security.openshift.io
-  resourceNames:
-  - privileged
-  resources:
-  - securitycontextconstraints
-  verbs:
-  - use
-- apiGroups:
-  - whereabouts.cni.cncf.io
-  resources:
-  - ippools
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - whereabouts.cni.cncf.io
-  resources:
-  - overlappingrangeipreservations
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
