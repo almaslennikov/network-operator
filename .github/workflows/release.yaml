@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-24.04
     outputs:
       app_version: ${{ steps.set-version.outputs.app_version }}
-      release_branch: ${{ steps.determine-branches.outputs.release_branch }}
+      major_minor_x: ${{ steps.determine-branches.outputs.major_minor_x }}
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       ISSUE_TITLE: ${{ github.event.issue.title }}
@@ -25,14 +25,13 @@ jobs:
       - name: Determine branches
         id: determine-branches
         run: |
-          v_major_minor=$(echo $APP_VERSION | grep -Eo '^v[0-9]+\.[0-9]+')
-          release_branch=$v_major_minor.x
-          echo "RELEASE_BRANCH=${release_branch}" >> $GITHUB_OUTPUT
+          major_minor_x=$(echo $APP_VERSION | grep -Eo '^v[0-9]+\.[0-9]+').x
+          echo "major_minor_x=${major_minor_x}" >> $GITHUB_OUTPUT
 
           if echo $APP_VERSION | grep -q beta; then
             base_branch=master
           else
-            base_branch=$release_branch
+            base_branch=v$major_minor_x
           fi
           echo BASE_BRANCH=$base_branch | tee -a $GITHUB_ENV
       - name: Verify release branch exists if "rc" version
@@ -93,7 +92,7 @@ jobs:
     env:
       GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       APP_VERSION: ${{ needs.update-network-operator-version.outputs.app_version }}
-      RELEASE_BRANCH: ${{ needs.update-network-operator-version.outputs.release_branch }}
+      MAJOR_MINOR_X: ${{ needs.update-network-operator-version.outputs.major_minor_x }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -107,6 +106,8 @@ jobs:
           git config user.name almaslennikov
           git config user.email amaslennikov@nvidia.com
           git fetch origin || echo "Failed to fetch from remote"
+
+          RELEASE_BRANCH=network-operator-${MAJOR_MINOR_X}
 
           echo "Checking if the release branch exists"
           if git ls-remote --heads origin $RELEASE_BRANCH | grep -q "$RELEASE_BRANCH"; then
