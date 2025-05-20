@@ -48,8 +48,9 @@ CniPlugins:
   version: v1.6.2-update.1
 Multus:
   image: multus-cni
-  repository: ghcr.io/almaslennikov
-  version: 3ea1db0
+  repository: ghcr.io/k8snetworkplumbingwg
+  managedRepo: multus-cni
+  version: v4.1.0
 Ipoib:
   image: ipoib-cni
   repository: ghcr.io/mellanox
