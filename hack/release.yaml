@@ -49,6 +49,7 @@ CniPlugins:
 Multus:
   image: multus-cni
   repository: ghcr.io/k8snetworkplumbingwg
+  managedRepo: multus-cni
   version: v4.1.0
 Ipoib:
   image: ipoib-cni
