@@ -80,7 +80,7 @@ jobs:
         run: |
           # Extract the managedRepo field from each component
           # This will create a JSON array of the repository names
-          components=$(yq 'to_entries | map(select(.value.managedRepo != null) | .value.managedRepo)' hack/release.yaml)
+          components=$(yq -o=json 'to_entries | map(select(.value.managedRepo != null) | .value.managedRepo)' hack/release.yaml)
           echo $components
           echo "managed_components=${components}" >> $GITHUB_OUTPUT
 
