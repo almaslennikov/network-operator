@@ -91,13 +91,13 @@ jobs:
       matrix:
         component: ${{ fromJson(needs.get-managed-components.outputs.managed_components) }}
     env:
-      GH_TOKEN: ${{ secrets.secrets.GITHUB_TOKEN }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       APP_VERSION: ${{ needs.update-network-operator-version.outputs.app_version }}
       RELEASE_BRANCH: ${{ needs.update-network-operator-version.outputs.release_branch }}
     steps:
       - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.secrets.GITHUB_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
           repository: ${{ github.repository_owner }}/${{ matrix.component }}
           path: ${{ matrix.component }}
           fetch-depth: 0
