@@ -11,7 +11,7 @@ jobs:
       app_version: ${{ steps.set-version.outputs.app_version }}
       release_branch: ${{ steps.determine-branches.outputs.release_branch }}
     env:
-      GH_TOKEN: ${{ secrets.GH_TOKEN_NVIDIA_CI_CD }}
+      GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       ISSUE_TITLE: ${{ github.event.issue.title }}
     steps:
       - uses: actions/checkout@v4
@@ -90,13 +90,13 @@ jobs:
       matrix:
         component: ${{ fromJson(needs.get-managed-components.outputs.managed_components) }}
     env:
-      GH_TOKEN: ${{ secrets.GH_TOKEN_NVIDIA_CI_CD }}
+      GH_TOKEN: ${{ secrets.secrets.GITHUB_TOKEN }}
       APP_VERSION: ${{ needs.update-network-operator-version.outputs.app_version }}
       RELEASE_BRANCH: ${{ needs.update-network-operator-version.outputs.release_branch }}
     steps:
       - uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GH_TOKEN_NVIDIA_CI_CD }}
+          token: ${{ secrets.secrets.GITHUB_TOKEN }}
           repository: ${{ github.repository_owner }}/${{ matrix.component }}
           path: ${{ matrix.component }}
           fetch-depth: 0
