@@ -40,15 +40,15 @@ jobs:
           if echo $APP_VERSION | grep -q 'rc'; then
             git fetch origin
             if ! git ls-remote --heads origin $BASE_BRANCH | grep -q "$BASE_BRANCH"; then
-              # git config user.name  nvidia-ci-cd
-              # git config user.email svc-cloud-orch-gh@nvidia.com
+              git config user.name almaslennikov
+              git config user.email amaslennikov@nvidia.com
               git checkout -b $BASE_BRANCH
               git push -u origin $BASE_BRANCH
             fi
           fi
       - run: |
-          # git config user.name  nvidia-ci-cd
-          # git config user.email svc-cloud-orch-gh@nvidia.com
+          git config user.name almaslennikov
+          git config user.email amaslennikov@nvidia.com
           git fetch origin $BASE_BRANCH
           git checkout -b cicd/update-network-operator-to-$APP_VERSION origin/$BASE_BRANCH
           yq -i '.NetworkOperator.version = "${{ env.APP_VERSION }}"' hack/release.yaml
@@ -103,8 +103,8 @@ jobs:
       - name: Create tag to trigger PR that update image tags in network-operator values
         run: |
           cd ${{ matrix.component }}
-          #git config user.name  nvidia-ci-cd
-          #git config user.email svc-cloud-orch-gh@nvidia.com
+          git config user.name almaslennikov
+          git config user.email amaslennikov@nvidia.com
           git fetch origin || echo "Failed to fetch from remote"
 
           echo "Checking if the release branch exists"
