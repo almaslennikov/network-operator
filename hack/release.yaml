@@ -6,12 +6,12 @@ NetworkOperatorInitContainer:
   image: network-operator-init-container
   repository: ghcr.io/mellanox
   sourceRepository: network-operator-init-container
-  version: v0.0.3
+  version: network-operator-v25.7.0-beta.1
 SriovNetworkOperator:
   image: sriov-network-operator
   repository: nvcr.io/nvidia/mellanox
   sourceRepository: sriov-network-operator
-  version: network-operator-25.4.0
+  version: network-operator-v25.7.0-beta.1
 SriovNetworkOperatorWebhook:
   image: sriov-network-operator-webhook
   repository: nvcr.io/nvidia/mellanox
@@ -97,11 +97,11 @@ nicConfigurationOperator:
   image: nic-configuration-operator
   repository: ghcr.io/mellanox
   sourceRepository: nic-configuration-operator
-  version: v1.0.3
+  version: network-operator-v25.7.0-beta.1
 nicConfigurationConfigDaemon:
   image: nic-configuration-operator-daemon
   repository: ghcr.io/mellanox
-  version: v1.0.3
+  version: network-operator-v25.7.0-beta.1
 maintenanceOperator:
   image: maintenance-operator
   repository: nvcr.io/nvstaging/mellanox
@@ -116,4 +116,4 @@ nodeFeatureDiscovery:
   image: node-feature-discovery
   repository: registry.k8s.io/nfd
   sourceRepository: node-feature-discovery
-  version: v0.17.0
+  version: network-operator-v25.7.0-beta.1
